@@ -29,7 +29,7 @@ namespace mvirp {
     class Routes_Generator {
     public:
         bool use_CONCORDE;
-        static int counter;
+        int counter;
         MVIRP_graph* G;
         list<Route> Routes;
         Routes_Generator(MVIRP_graph* &graph, list<Route> routes);

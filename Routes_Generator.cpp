@@ -15,15 +15,15 @@
 
 namespace mvirp {
 
-    int Routes_Generator::counter = 1;
-
     Routes_Generator::Routes_Generator(MVIRP_graph* &graph, list<Route> routes) {
+        counter = 1;
         G = graph;
         Routes = routes;
         use_CONCORDE = graph->cfg->getValueOfKey<bool>("USE_CONCORDE_WITHIN_VRPH");
     }
 
     Routes_Generator::Routes_Generator(MVIRP_graph* &graph) {
+        counter = 1;
         G = graph;
         use_CONCORDE = graph->cfg->getValueOfKey<bool>("USE_CONCORDE_WITHIN_VRPH");
     }
@@ -47,6 +47,7 @@ namespace mvirp {
         if (routeExists(r)) {
             return false;
         } else {
+            r.setIdRoute(Routes.size() + 1);
             Routes.emplace_back(r);
             return true;
         }
@@ -79,9 +80,7 @@ namespace mvirp {
             r.setRoute(path);
             r.setCost(cost);
             r.addTime(time);
-            if (!addRoute(r)) {
-                Route::counter--;
-            }
+            addRoute(r);
             return cost;
         }
 
@@ -114,9 +113,7 @@ namespace mvirp {
             r.setRoute(path);
             r.setCost(cost);
             r.addTime(time);
-            if (!addRoute(r)) {
-                Route::counter--;
-            }
+            addRoute(r);
             return cost;
         }
         if (_S.size() == 4) {
@@ -138,9 +135,7 @@ namespace mvirp {
                 r.setRoute(path);
                 r.setCost(cost);
                 r.addTime(time);
-                if (!addRoute(r)) {
-                    Route::counter--;
-                }
+                addRoute(r);
                 return cost;
             } else if (sum_path2 <= sum_path1 && sum_path2 <= sum_path3) {
                 delete elist;
@@ -156,9 +151,7 @@ namespace mvirp {
                 r.setRoute(path);
                 r.setCost(cost);
                 r.addTime(time);
-                if (!addRoute(r)) {
-                    Route::counter--;
-                }
+                addRoute(r);
                 return cost;
             } else {
                 delete elist;
@@ -174,9 +167,7 @@ namespace mvirp {
                 r.setRoute(path);
                 r.setCost(cost);
                 r.addTime(time);
-                if (!addRoute(r)) {
-                    Route::counter--;
-                }
+                addRoute(r);
                 return cost;
             }
         }
@@ -209,9 +200,7 @@ namespace mvirp {
         r.setRoute(path);
         r.setCost(cost);
         r.addTime(time);
-        if (!addRoute(r)) {
-            Route::counter--;
-        }
+        addRoute(r);
         return cost;
     }
 
@@ -305,12 +294,8 @@ namespace mvirp {
                     r.setRoute(vrp_route);
                     r.computeCost(G->graph);
                     r.addTime(time);
-                    if (!addRoute(r)) {
-                        Route::counter--;
-//                        Route::counter = Routes.back().getIdRoute() + 1;
-                    }
+                    addRoute(r);
                 }
-                //                routes.emplace_back(vrp_route);
 
                 vrp_route.clear();
                 if (sol_buff[i] == 0)
@@ -334,7 +319,8 @@ namespace mvirp {
         delete sol_buff;
     }
 
-    void Routes_Generator::get_VRP_solutions(vector<vector<list<std::tuple<int, Vertex, float> > > >& p_maps) {
+    void Routes_Generator::get_VRP_solutions(
+    vector<vector<list<std::tuple<int, Vertex, float> > > >& p_maps) {
         clock_t c_start = clock();
         for (auto& zq_sol : p_maps) {
             for (int t = 1; t <= G->H; ++t) {

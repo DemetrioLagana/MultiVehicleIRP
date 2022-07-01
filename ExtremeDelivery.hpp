@@ -23,9 +23,8 @@ namespace mvirp {
 
     class ExtremeDelivery_model {
     public:
-        static int counter;
         bool export_model;
-        int id_model, flipping_threshold, MIP_emphasis, num_times_solve_model, probing, tabu_tenure, time, var_sel;
+        int counter, id_model, flipping_threshold, MIP_emphasis, num_times_solve_model, probing, tabu_tenure, time, var_sel;
         MVIRP_graph* G;
         string LP;
         vector<std::tuple<int, int, int, float > > z_q_sol;

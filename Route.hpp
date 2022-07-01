@@ -22,7 +22,6 @@ namespace mvirp {
 
     class Route {
     public:
-        static int counter;
         Route();
         Route(list<Vertex> trip, double weight);
         Route(const Route& other) : Id_Route(other.Id_Route), route(other.route), cost(other.cost) {}

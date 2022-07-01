@@ -81,7 +81,6 @@ namespace mvirp {
                 it_next++;
             }
         }
-        
         compute_I0s_bards();
         compute_U_Tplus_Tminus();
     }
@@ -194,7 +193,7 @@ namespace mvirp {
             }
             for (int t = 1; t <= H; ++t) {
                 vector<int> Tminus;
-                for (int s = 1; s <= H + 1; ++s) {
+                for (int s = 1; s <= H; ++s) {
                     if (find(VertexTplus[*Vp.first][s - 1].begin(), VertexTplus[*Vp.first][s - 1].end(), t) != VertexTplus[*Vp.first][s - 1].end()) {
                         Tminus.emplace_back(s);
                     }
@@ -214,7 +213,7 @@ namespace mvirp {
             vertex_range_t Vp = vertices(*graph);
             Vp.first++;
             for (; Vp.first != Vp.second; ++Vp.first) {
-                for (int s = 1; s <= H + 1; ++s) {
+                for (int s = 1; s <= H; ++s) {
                     if (find(VertexTminus[*Vp.first][s - 1].begin(), VertexTminus[*Vp.first][s - 1].end(), t) != VertexTminus[*Vp.first][s - 1].end()) {
                         t_set.emplace(VertexIndex[*Vp.first]);
                         ids.emplace(VertexIndex[*Vp.first]);

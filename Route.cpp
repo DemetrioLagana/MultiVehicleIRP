@@ -15,15 +15,13 @@
 
 namespace mvirp {
 
-    int Route::counter = 1;
+//    int Route::counter = 1;
 
     Route::Route() {
-        Id_Route = Route::counter++;
         cost = 0;
     }
     
     Route::Route(list<Vertex> trip, double weight) {
-        Id_Route = Route::counter++;
         route = trip;
         cost = weight;
     }

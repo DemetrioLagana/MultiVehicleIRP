@@ -15,9 +15,8 @@
 
 namespace mvirp {
 
-    int ExtremeDelivery_model::counter = 1;
-
     ExtremeDelivery_model::ExtremeDelivery_model(MVIRP_graph &Graph) {
+        counter = 1;
         G = &Graph;
         export_model = G->cfg->getValueOfKey<bool>("EXPORT_MODEL");
         flipping_threshold = G->cfg->getValueOfKey<int>("FLIPPING_THRESHOLD");
