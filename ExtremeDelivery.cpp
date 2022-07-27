@@ -161,7 +161,10 @@ namespace mvirp {
 
                 AggCap.end();
             }
-            // ADDED in JULY 27 2022 TO ACCOUNT FOR THE FACT THAT SUM_{i \in N} q^s_{ip} <= Q
+            // ADDED IN JULY 27 2022 TO ACCOUNT FOR THE FACT THAT SUM_{s \in T^+_{ip}} q^s_{ip} <= Q, WHERE
+            // Q IS THE VEHICLE CAPACITY. THESE CONSTRAINTS IMPOSE THAT THE TOTAL AMOUNT DELIVERED TO
+            // CUSTOMER i IN PERIOD p TO COVER THE DEMANDS FROM p TO ANY SUCCESSIVE PERIOD CANNOT BE
+            // GREATER THAN THE VEHICLE CAPACITY
             for (; Vp.first != Vp.second; ++Vp.first) {
                 for (int p = 1; p <= G->H; ++p) {
                     IloExpr UpperDeliverySingleCustomer(env);
