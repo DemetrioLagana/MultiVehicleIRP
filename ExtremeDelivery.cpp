@@ -161,7 +161,29 @@ namespace mvirp {
 
                 AggCap.end();
             }
+            // ADDED in JULY 27 2022 TO ACCOUNT FOR THE FACT THAT SUM_{i \in N} q^s_{ip} <= Q
+            for (; Vp.first != Vp.second; ++Vp.first) {
+                for (int p = 1; p <= G->H; ++p) {
+                    IloExpr UpperDeliverySingleCustomer(env);
+                    ss.str("");
+                    ss.clear();
+                    ss << "UpperDeliverySingleCustomer_v:" << VertexIndex[*Vp.first] + 1 << "p:" << p;
+                    for (int s = 0; s < VertexTplus[*Vp.first][p - 1].size(); ++s) {
+                        if (VertexTplus[*Vp.first][p - 1][s] <= G->H) {
+                            UpperDeliverySingleCustomer += q[VertexIndex[*Vp.first] - 1][p - 1][s];
+                        }
+                    }
+                    model.add(UpperDeliverySingleCustomer <= G->Q).setName(&(ss.str()[0]));
+                    constraint = (UpperDeliverySingleCustomer <= G->Q);
+                    constraint.setName(&(ss.str()[0]));
+                    rng.add(constraint);
 
+                    UpperDeliverySingleCustomer.end();
+                }
+            }
+            
+            Vp = vertices(*(G->graph));
+            Vp.first++;
             for (; Vp.first != Vp.second; ++Vp.first) {
                 for (int p = 1; p <= G->H; ++p) {
                     for (int s = 0; s < VertexTplus[*Vp.first][p - 1].size(); ++s) {

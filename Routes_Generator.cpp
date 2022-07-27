@@ -254,19 +254,21 @@ namespace mvirp {
                 30, 5, 2, .01, 30, VRPH_LI_PERTURB, VRPH_BEST_ACCEPT, false);
         solution_val1 = vrp1.get_best_total_route_length();
 
-        Sweep alg2;
-        alg2.Construct(&vrp2);
-        vrp2.RTR_solve(ONE_POINT_MOVE + TWO_POINT_MOVE + TWO_OPT + THREE_OPT,
-                30, 5, 2, .01, 30, VRPH_LI_PERTURB, VRPH_BEST_ACCEPT, false);
-
-        solution_val2 = vrp2.get_best_total_route_length();
-        if (solution_val1 >= solution_val2) {
-            best_cost = solution_val2;
-            vrp2.export_canonical_solution_buff(sol_buff);
-        } else {
-            best_cost = solution_val1;
-            vrp1.export_canonical_solution_buff(sol_buff);
-        }
+//        Sweep alg2;
+//        alg2.Construct(&vrp2);
+//        vrp2.RTR_solve(ONE_POINT_MOVE + TWO_POINT_MOVE + TWO_OPT + THREE_OPT,
+//                30, 5, 2, .01, 30, VRPH_LI_PERTURB, VRPH_BEST_ACCEPT, false);
+//
+//        solution_val2 = vrp2.get_best_total_route_length();
+//        if (solution_val1 >= solution_val2) {
+//            best_cost = solution_val2;
+//            vrp2.export_canonical_solution_buff(sol_buff);
+//        } else {
+//            best_cost = solution_val1;
+//            vrp1.export_canonical_solution_buff(sol_buff);
+//        }
+        best_cost = solution_val1;
+        vrp1.export_canonical_solution_buff(sol_buff);
         //        for(int i = 0; i < data.size() + 1; ++i) {
         //            if (sol_buff[i] < 0) {
         //                (*G->MVIRP_logfile) << "sol_buff[" << i << "] = " << sol_buff[i] - 1 << " - ";
