@@ -275,11 +275,14 @@ namespace mvirp {
             while (source_file.good()) {
                 line.clear();
                 getline(source_file, line);
-                if (line.size() > 0 && line_counter == 0) {
+                line = trim(line);
+                line = reduce(line);
+//                cout << "line.size() = " << line.size() << " - " << line << endl;
+                if (line.size() > 1 && line_counter == 0) {
                     ss.str("");
                     ss.clear();
-                    line = trim(line);
-                    line = reduce(line);
+//                    line = trim(line);
+//                    line = reduce(line);
                     ss << line;
                     getline(ss, s, ' ');
                     G->num_vertices = atoi(&(s[0]));
@@ -295,11 +298,11 @@ namespace mvirp {
                     getline(ss, s, ' ');
                     G->Q = round(atof(&(s[0]))/G->num_vehicles);
                 }
-                if (line.size() > 0 && line_counter == 1) {
+                if (line.size() > 1 && line_counter == 1) {
                     ss.str("");
                     ss.clear();
-                    line = trim(line);
-                    line = reduce(line);
+//                    line = trim(line);
+//                    line = reduce(line);
                     ss << line;
                     getline(ss, s, ' ');
                     Vertex supplier = vertex(atoi(&(s[0])) - 1, (*G->graph));
@@ -315,11 +318,11 @@ namespace mvirp {
                     getline(ss, s, ' ');
                     VertexInvCost[supplier] = atof(&(s[0]));
                 }
-                if (line.size() > 0 && line_counter > 1) {
+                if (line.size() > 1 && line_counter > 1) {
                     ss.str("");
                     ss.clear();
-                    line = trim(line);
-                    line = reduce(line);
+//                    line = trim(line);
+//                    line = reduce(line);
                     ss << line;
                     getline(ss, s, ' ');
                     Vertex customer = vertex(atoi(&(s[0])) - 1, (*G->graph));
@@ -339,7 +342,8 @@ namespace mvirp {
                     getline(ss, s, ' ');
                     VertexInvCost[customer] = atof(&(s[0]));
                 }
-                line_counter++;
+                if (line.size() > 1)
+                    line_counter++;
             }
             source_file.close();
             cout << "Instance read successfully" << endl;
