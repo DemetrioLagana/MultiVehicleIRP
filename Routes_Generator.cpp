@@ -67,9 +67,14 @@ namespace mvirp {
         vector<Vertex> _S;
         list<Vertex> path;
         Route r = Route();
-        for (auto & v : vertices) {
-            _S.emplace_back(v);
+        // UPDATE 05.08.2022
+        int rval = 0;
+        for(list<Vertex>::iterator it = vertices.begin(); it != prev(vertices.end()); ++it) {
+            _S.emplace_back(*it);
         }
+//        for (auto & v : vertices) {
+//            _S.emplace_back(v);
+//        }
 //        for (const auto& v : _S) {
 //            (*G->MVIRP_logfile) << Vertex_Index[v] + 1 << " ";
 //        }
@@ -209,8 +214,11 @@ namespace mvirp {
         }
 
         CCdatagroup dat;
+        // Initialize a CCdatagroup
         CCutil_init_datagroup(&dat);
-        CCutil_graph2dat_matrix(_S.size(), dim - 1, elist, elen, 1, &dat);
+        // UPDATE 05.08.2022
+        //Convert a matrix of edge lengths to a CCdatagroup
+        rval = CCutil_graph2dat_matrix(_S.size(), dim, elist, elen, 1, &dat);
         // UPDATE 04.08.2022
 //        int rval = CCutil_graph2dat_matrix(_S.size(), ecount, elist, elen, 1, &dat);
 //        (*G->MVIRP_logfile) << "rval = " << rval << endl;
@@ -219,13 +227,16 @@ namespace mvirp {
 //        int seed = rand();
         CCutil_sprand(seed, &rstate);
         // UPDATE 04.08.2022
+        int *in_tour = (int *) NULL;
         int *out_tour = new int[_S.size()];
 //        char *name = (char *) NULL;
 //        name = CCtsp_problabel("_");
         double optval = 0;
+        // UPDATE 05.08.2022
         int success, found_tour, hit_timebound = 0;
 //        cout << "HERE 0" << endl;
-        CCtsp_solve_dat(_S.size(), &dat, NULL, out_tour, NULL, &optval, &success, &found_tour, NULL, NULL, &hit_timebound, 1, &rstate);
+        //Solves the TSP over the graph specified in the datagroup
+        rval = CCtsp_solve_dat(_S.size(), &dat, in_tour, out_tour, NULL, &optval, &success, &found_tour, NULL, NULL, &hit_timebound, 1, &rstate);
 //        int *in_tour = (int *) NULL;
 //        int *out_tour = (int *) NULL;
 //        CCtsp_solve_dat(_S.size(), &dat, in_tour, out_tour, NULL, &optval, &success, &found_tour, NULL, NULL, &hit_timebound, 1, &rstate);

@@ -409,6 +409,8 @@ namespace mvirp {
                 clear_and_restart_the_model();
             }
             IloNum const end_time = cplex.getCplexTime() - start_time;
+            (*G->MVIRP_logfile) << "SETTING: NUM_TIMES_SOLVE_MODEL = " << num_times_solve_model <<
+                    " - FLIPPING_THRESHOLD = " << flipping_threshold << " - TABU_TENURE = " << tabu_tenure << endl;
             (*G->MVIRP_logfile) << "COMPUTING TIME (sec.) TO SOLVE THE EXTREME DELIVERY MODEL " << num_times_solve_model << " TIMES, ITERATIVELY: " << end_time << endl;
         } catch (IloException& e) {
             (*G->MVIRP_logfile) << "solve_iteratively(): Concert exception caught: " << e << endl;
