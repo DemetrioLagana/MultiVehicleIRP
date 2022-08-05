@@ -404,6 +404,7 @@ namespace mvirp {
             int iterations = 1;
             IloNum const start_time = cplex.getCplexTime();
             while (solve() && iterations < num_times_solve_model) {
+//                (*G->MVIRP_logfile) << "Iteration n. = " << iterations << endl;
                 iterations++;
                 clear_and_restart_the_model();
             }
@@ -444,6 +445,7 @@ namespace mvirp {
 //                (*G->MVIRP_logfile) << "Number of nodes remaining to be processed, or, equivalently, the number of active nodes in the tree = " << cplex.getNnodesLeft() << endl;
 //                (*G->MVIRP_logfile) << "getTimetoBuildModel = " << time_to_build << " sec." << endl;
 //                (*G->MVIRP_logfile) << "getCplexTime = " << cpxTime << " sec." << endl;
+                (*G->MVIRP_logfile) << "No solution found - CPLEX status = " << cplex.getCplexStatus() << endl;
                 return false;
             } else {
 //                (*G->MVIRP_logfile) << fixed << setprecision(3) << "Objective value = " << cplex.getObjValue() << endl;
@@ -457,11 +459,12 @@ namespace mvirp {
 //                (*G->MVIRP_logfile) << "getCplexTime = " << cpxTime << " sec." << endl;
 //                bool new_solution_found = get_z_q_sol();
                 if (get_z_q_sol()) {
-//                    cout << "HERE TRUE new_solution_found = " << new_solution_found << endl;
+//                    cout << "HERE TRUE new_solution_found" << endl;
 //                    print_solution();
                     return true;
                 } else {
-//                    cout << "HERE FALSE new_solution_found = " << new_solution_found << endl;
+//                    cout << "HERE FALSE new_solution_found" << endl;
+//                    assert(false);
                     return false;
                 }
             }
@@ -488,9 +491,9 @@ namespace mvirp {
                             delivery += cplex.getValue(q[VertexIndex[*Vp.first] - 1][p - 1][s]);
                         }
                     }
-                    z_q_sol.emplace_back(make_tuple(VertexIndex[*Vp.first], p,
-                            IloRound(cplex.getValue(z[VertexIndex[*Vp.first] - 1][p - 1])),
-                            delivery));
+//                    z_q_sol.emplace_back(make_tuple(VertexIndex[*Vp.first], p,
+//                            IloRound(cplex.getValue(z[VertexIndex[*Vp.first] - 1][p - 1])),
+//                            delivery));
                     zq.emplace_back(make_tuple(VertexIndex[*Vp.first], p,
                             IloRound(cplex.getValue(z[VertexIndex[*Vp.first] - 1][p - 1])),
                             delivery));

@@ -77,7 +77,7 @@ namespace mvirp {
                 ss << "(" << to_string(VertexIndex[*it] + 1) << "," << to_string(VertexIndex[*it_next] + 1) << ")";
                 EdgeName[e] = ss.str();
                 EdgeIndex[e] = edge_index++;
-                EdgeCost[e] = floor(sqrt(pow((VertexCoordX[*it_next] - VertexCoordX[*it]),2) + pow((VertexCoordY[*it_next] - VertexCoordY[*it]),2)));
+                EdgeCost[e] = round(sqrt(pow((VertexCoordX[*it_next] - VertexCoordX[*it]),2) + pow((VertexCoordY[*it_next] - VertexCoordY[*it]),2)));
                 it_next++;
             }
         }

@@ -62,6 +62,7 @@ namespace mvirp {
     }
 
     float Routes_Generator::applyTSP(int &time, list<Vertex>& vertices) {
+        MapVertexIndex Vertex_Index = get(vertex_index, *(G->graph));
         MapEdgeCost Edge_Cost = get(edge_cost_t(), *(G->graph));
         vector<Vertex> _S;
         list<Vertex> path;
@@ -69,7 +70,10 @@ namespace mvirp {
         for (auto & v : vertices) {
             _S.emplace_back(v);
         }
-
+//        for (const auto& v : _S) {
+//            (*G->MVIRP_logfile) << Vertex_Index[v] + 1 << " ";
+//        }
+//        (*G->MVIRP_logfile) << "_S.size() = " << _S.size() << endl;
         int cost = 0;
 
         if (_S.size() == 2) {
@@ -88,18 +92,50 @@ namespace mvirp {
         for (int i = 1; i < _S.size(); i++) {
             dim += i;
         }
+        // UPDATE 04.08.2022
+//        int dim = _S.size();
+//        (*G->MVIRP_logfile) << "dim = " << dim << endl;
+        // UPDATE 04.08.2022
+//        int ecount = (dim * (dim - 1)) / 2;
         int *elist = new int[2 * dim];
         int *elen = new int[dim];
+        // UPDATE 04.08.2022
+//        int *elist = new int[2 * ecount];
+//        int *elen = new int[ecount];
         int k = 0;
         //Building elist and elen
         for (int i = 0; i < _S.size(); i++) {
             for (int l = i + 1; l < _S.size(); l++) {
                 elist[2 * k] = i;
                 elist[2 * k + 1] = l;
-                elen[k] = (int) Edge_Cost[edge(_S[i], _S[l], *(G->graph)).first];
+                if (Vertex_Index[_S[i]] < Vertex_Index[_S[l]]) {
+                    elen[k] = (int) Edge_Cost[edge(_S[i], _S[l], *(G->graph)).first];
+                } else {
+                    elen[k] = (int) Edge_Cost[edge(_S[l], _S[i], *(G->graph)).first];
+                }
                 k++;
             }
         }
+        // UPDATE 04.08.2022
+//        int edgeindex = 0;
+//        int edgeWeight = 0;
+//        for (int i = 0; i < _S.size(); i++) {
+//            for (int l = i + 1; l < _S.size(); l++) {
+//                elist[edgeindex] = i;
+//                (*G->MVIRP_logfile) << "(elist[" << edgeindex << "] = " << elist[edgeindex] << ", ";
+//                elist[edgeindex + 1] = l;
+//                (*G->MVIRP_logfile) << "elist[" << edgeindex + 1 << "] = " << elist[edgeindex + 1] << ") - ";
+//                if (Vertex_Index[_S[i]] < Vertex_Index[_S[l]]) {
+//                    elen[edgeWeight] = (int) Edge_Cost[edge(_S[i], _S[l], *(G->graph)).first];
+//                    (*G->MVIRP_logfile) << "elen[" << edgeWeight << "] = " << elen[edgeWeight] << endl;
+//                } else {
+//                    elen[edgeWeight] = (int) Edge_Cost[edge(_S[l], _S[i], *(G->graph)).first];
+//                    (*G->MVIRP_logfile) << "elen[" << edgeWeight << "] = " << elen[edgeWeight] << endl;
+//                }
+//                edgeWeight++;
+//                edgeindex = edgeindex + 2;
+//            }
+//        }
         if (_S.size() == 3) {
             cost = elen[0] + elen[1] + elen[2];
             path.push_back(_S[0]);
@@ -174,18 +210,26 @@ namespace mvirp {
 
         CCdatagroup dat;
         CCutil_init_datagroup(&dat);
-        CCutil_graph2dat_matrix(_S.size(), dim, elist, elen, 0, &dat);
-
+        CCutil_graph2dat_matrix(_S.size(), dim - 1, elist, elen, 1, &dat);
+        // UPDATE 04.08.2022
+//        int rval = CCutil_graph2dat_matrix(_S.size(), ecount, elist, elen, 1, &dat);
+//        (*G->MVIRP_logfile) << "rval = " << rval << endl;
         CCrandstate rstate;
         int seed = (int) CCutil_real_zeit();
+//        int seed = rand();
         CCutil_sprand(seed, &rstate);
-
-        int* out_tour = new int[_S.size()];
+        // UPDATE 04.08.2022
+        int *out_tour = new int[_S.size()];
+//        char *name = (char *) NULL;
+//        name = CCtsp_problabel("_");
         double optval = 0;
-        int success = 0, found_tour = 0, hit_timebound = INT_MAX;
-
+        int success, found_tour, hit_timebound = 0;
+//        cout << "HERE 0" << endl;
         CCtsp_solve_dat(_S.size(), &dat, NULL, out_tour, NULL, &optval, &success, &found_tour, NULL, NULL, &hit_timebound, 1, &rstate);
-
+//        int *in_tour = (int *) NULL;
+//        int *out_tour = (int *) NULL;
+//        CCtsp_solve_dat(_S.size(), &dat, in_tour, out_tour, NULL, &optval, &success, &found_tour, NULL, NULL, &hit_timebound, 1, &rstate);
+//        cout << "HERE 1" << endl;
         for (int i = 0; i < _S.size(); i++) {
             path.push_back(_S[out_tour[i]]);
         }

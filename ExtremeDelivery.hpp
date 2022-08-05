@@ -27,7 +27,7 @@ namespace mvirp {
         int counter, id_model, flipping_threshold, MIP_emphasis, num_times_solve_model, probing, tabu_tenure, time, var_sel;
         MVIRP_graph* G;
         string LP;
-        vector<std::tuple<int, int, int, float > > z_q_sol;
+//        vector<std::tuple<int, int, int, float > > z_q_sol;
         typedef vector<std::tuple<int, int, int, float > > zq_sol;
         list<pair<int, zq_sol> > zq_solutions;
         
