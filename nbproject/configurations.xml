@@ -51,7 +51,8 @@
             <pElem>/opt/ibm/ILOG/CPLEX_Studio126/concert/include</pElem>
             <pElem>/opt/ibm/ILOG/CPLEX_Studio126/cplex/include</pElem>
             <pElem>../../VRPH/inc</pElem>
-            <pElem>/opt/concorde</pElem>
+            <pElem>/opt/CONCORDE/concorde</pElem>
+            <pElem>/opt/CONCORDE/qsopt</pElem>
           </incDir>
           <preprocessorList>
             <Elem>ILO_LINUX</Elem>
@@ -65,7 +66,8 @@
             <pElem>/opt/ibm/ILOG/CPLEX_Studio126/concert/lib/x86-64_linux/static_pic</pElem>
             <pElem>../../VRPH/bin</pElem>
             <pElem>../../VRPH/lib</pElem>
-            <pElem>/opt/concorde</pElem>
+            <pElem>/opt/CONCORDE/concorde</pElem>
+            <pElem>/opt/CONCORDE/qsopt</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>ilocplex</linkerLibLibItem>
@@ -73,7 +75,7 @@
             <linkerLibLibItem>cplex</linkerLibLibItem>
             <linkerLibLibItem>vrph</linkerLibLibItem>
             <linkerLibLibItem>concorde</linkerLibLibItem>
-            <linkerLibLibItem>cplex</linkerLibLibItem>
+            <linkerLibLibItem>qsopt</linkerLibLibItem>
           </linkerLibItems>
           <commandLine>-lm -lpthread -zmuldefs -lboost_system -ldl</commandLine>
         </linkerTool>

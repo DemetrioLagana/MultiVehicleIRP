@@ -56,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/opt/ibm/ILOG/CPLEX_Studio126/cplex/lib/x86-64_linux/static_pic -L/opt/ibm/ILOG/CPLEX_Studio126/cplex/bin/x86-64_linux -L/opt/ibm/ILOG/CPLEX_Studio126/concert/lib/x86-64_linux/static_pic -L../../VRPH/bin -L../../VRPH/lib -L/opt/concorde -lilocplex -lconcert -lcplex -lvrph -lconcorde -lcplex
+LDLIBSOPTIONS=-L/opt/ibm/ILOG/CPLEX_Studio126/cplex/lib/x86-64_linux/static_pic -L/opt/ibm/ILOG/CPLEX_Studio126/cplex/bin/x86-64_linux -L/opt/ibm/ILOG/CPLEX_Studio126/concert/lib/x86-64_linux/static_pic -L../../VRPH/bin -L../../VRPH/lib -L/opt/CONCORDE/concorde -L/opt/CONCORDE/qsopt -lilocplex -lconcert -lcplex -lvrph -lconcorde -lqsopt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/multivehicleirp: ${OBJECTFILES}
 ${OBJECTDIR}/Build_MVIRP_graph.o: Build_MVIRP_graph.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/concorde -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Build_MVIRP_graph.o Build_MVIRP_graph.cpp
+	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/CONCORDE/concorde -I/opt/CONCORDE/qsopt -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Build_MVIRP_graph.o Build_MVIRP_graph.cpp
 
 ${OBJECTDIR}/ExtremeDelivery.o: ExtremeDelivery.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/concorde -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtremeDelivery.o ExtremeDelivery.cpp
+	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/CONCORDE/concorde -I/opt/CONCORDE/qsopt -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtremeDelivery.o ExtremeDelivery.cpp
 
 ${OBJECTDIR}/Route.o: Route.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/concorde -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Route.o Route.cpp
+	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/CONCORDE/concorde -I/opt/CONCORDE/qsopt -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Route.o Route.cpp
 
 ${OBJECTDIR}/Routes_Generator.o: Routes_Generator.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/concorde -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Routes_Generator.o Routes_Generator.cpp
+	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/CONCORDE/concorde -I/opt/CONCORDE/qsopt -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Routes_Generator.o Routes_Generator.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/concorde -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -DILO_LINUX -DIL_STD -I/opt/ibm/ILOG/CPLEX_Studio126/concert/include -I/opt/ibm/ILOG/CPLEX_Studio126/cplex/include -I../../VRPH/inc -I/opt/CONCORDE/concorde -I/opt/CONCORDE/qsopt -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
