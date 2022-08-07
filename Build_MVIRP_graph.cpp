@@ -27,6 +27,9 @@ namespace mvirp {
         num_vehicles = cfg->getValueOfKey<int>("NUM_VEHICLES");
         num_vertices = 0;
         print_graph_info = cfg->getValueOfKey<bool>("PRINT_GRAPH_INFO");
+        flipping_threshold = cfg->getValueOfKey<int>("FLIPPING_THRESHOLD");
+        tabu_tenure = cfg->getValueOfKey<int>("TABU_TENURE");
+        num_times_solve_model = cfg->getValueOfKey<int>("NUM_TIMES_SOLVE_MODEL");
     }
     
     
@@ -261,13 +264,15 @@ namespace mvirp {
         G->Instance_name = ss.str();
         
         ss.str("");
-        ss << "./" << dir << "/" << instance_name << "m" << G->num_vehicles << ".log";
+        ss << "./" << dir << "/" << instance_name << "m" << G->num_vehicles << "_n" << G->num_times_solve_model <<
+                "_ft" << G->flipping_threshold << "_tt" << G->tabu_tenure << ".log";
         G->MVIRP_logfile = new ofstream(&(ss.str()[0]));
         ss.str("");
         ss << "./" << dir << "/" << instance_name << "m" << G->num_vehicles;
         G->Problem_name = ss.str();
         ss.str("");
-        ss << "./" << dir << "/" << instance_name << "m" << G->num_vehicles << "_VRP_FILES";
+        ss << "./" << dir << "/" << instance_name << "m" << G->num_vehicles << "_n" << G->num_times_solve_model <<
+                "_ft" << G->flipping_threshold << "_tt" << G->tabu_tenure << "_VRP_FILES";
         G->VRP_folder = ss.str();
         
         if (source_file.is_open()) {

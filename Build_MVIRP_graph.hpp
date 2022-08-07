@@ -23,7 +23,7 @@ namespace mvirp {
     class MVIRP_graph {
     public:
         bool print_graph_info;
-        int num_vehicles, Q, H, num_vertices;
+        int flipping_threshold, num_times_solve_model, num_vehicles, Q, H, num_vertices, tabu_tenure;
         
         UndirectedGraph* graph;
         ConfigFile* cfg;

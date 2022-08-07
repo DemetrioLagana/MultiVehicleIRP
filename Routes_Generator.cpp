@@ -64,7 +64,8 @@ namespace mvirp {
     float Routes_Generator::applyTSP(int &time, list<Vertex>& vertices) {
         MapVertexIndex Vertex_Index = get(vertex_index, *(G->graph));
         MapEdgeCost Edge_Cost = get(edge_cost_t(), *(G->graph));
-        vector<Vertex> _S, Sp;
+        vector<Vertex> _S;
+//        vector<Vertex> Sp;
         list<Vertex> path;
         Route r = Route();
         // UPDATE 05.08.2022

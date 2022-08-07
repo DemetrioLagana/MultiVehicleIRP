@@ -19,13 +19,11 @@ namespace mvirp {
         counter = 1;
         G = &Graph;
         export_model = G->cfg->getValueOfKey<bool>("EXPORT_MODEL");
-        flipping_threshold = G->cfg->getValueOfKey<int>("FLIPPING_THRESHOLD");
-        num_times_solve_model = G->cfg->getValueOfKey<int>("NUM_TIMES_SOLVE_MODEL");
+//        num_times_solve_model = G->cfg->getValueOfKey<int>("NUM_TIMES_SOLVE_MODEL");
         MIP_emphasis = G->cfg->getValueOfKey<int>("MIP_EMP");
         probing = G->cfg->getValueOfKey<int>("PROBING");
         time = G->cfg->getValueOfKey<int>("TIME_LIMIT");
         var_sel = G->cfg->getValueOfKey<int>("VAR_SEL");
-        tabu_tenure = G->cfg->getValueOfKey<int>("TABU_TENURE");
 
         env = IloEnv();
         model = IloModel(env);
@@ -268,7 +266,7 @@ namespace mvirp {
 //                    flrng.clear();
 //                }
                 for (auto& p : zq_solutions) {
-                    if (p.first <= tabu_tenure) {
+                    if (p.first <= G->tabu_tenure) {
                         IloExpr Flipping(env);
                         ss.str("");
                         ss.clear();
@@ -282,8 +280,8 @@ namespace mvirp {
                                 Flipping -= z[get<0>(t) - 1][get<1>(t) - 1];
                             }
                         }
-                        model.add(Flipping >= flipping_threshold - number_of_visiting).setName(&(ss.str()[0]));
-                        constraint = (Flipping >= flipping_threshold - number_of_visiting);
+                        model.add(Flipping >= G->flipping_threshold - number_of_visiting).setName(&(ss.str()[0]));
+                        constraint = (Flipping >= G->flipping_threshold - number_of_visiting);
                         constraint.setName(&(ss.str()[0]));
                         flrng.add(constraint);
 
@@ -403,15 +401,15 @@ namespace mvirp {
         try {
             int iterations = 1;
             IloNum const start_time = cplex.getCplexTime();
-            while (solve() && iterations < num_times_solve_model) {
+            while (solve() && iterations < G->num_times_solve_model) {
 //                (*G->MVIRP_logfile) << "Iteration n. = " << iterations << endl;
                 iterations++;
                 clear_and_restart_the_model();
             }
             IloNum const end_time = cplex.getCplexTime() - start_time;
-            (*G->MVIRP_logfile) << "SETTING: NUM_TIMES_SOLVE_MODEL = " << num_times_solve_model <<
-                    " - FLIPPING_THRESHOLD = " << flipping_threshold << " - TABU_TENURE = " << tabu_tenure << endl;
-            (*G->MVIRP_logfile) << "COMPUTING TIME (sec.) TO SOLVE THE EXTREME DELIVERY MODEL " << num_times_solve_model << " TIMES, ITERATIVELY: " << end_time << endl;
+//            (*G->MVIRP_logfile) << "SETTING: NUM_TIMES_SOLVE_MODEL = " << num_times_solve_model <<
+//                    " - FLIPPING_THRESHOLD = " << G->flipping_threshold << " - TABU_TENURE = " << G->tabu_tenure << endl;
+            (*G->MVIRP_logfile) << "COMPUTING TIME (sec.) TO SOLVE THE EXTREME DELIVERY MODEL " << G->num_times_solve_model << " TIMES, ITERATIVELY: " << end_time << endl;
         } catch (IloException& e) {
             (*G->MVIRP_logfile) << "solve_iteratively(): Concert exception caught: " << e << endl;
         }
